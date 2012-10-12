@@ -418,9 +418,7 @@ class Consumer
 	
 	public function toString() : String
 	{
-		
-		
-		
+        return key;
 	}
 	
 }

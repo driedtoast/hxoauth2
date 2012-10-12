@@ -1,5 +1,4 @@
 -main OAuthTest.hx
--cpp Export
+-x OAuthTest
 -cp src
 -cp test
--v

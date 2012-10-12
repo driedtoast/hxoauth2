@@ -12,17 +12,17 @@ import utils.Base64;
  * @author Daniel Marchant
  */
 
-class DoTest
+class OAuthTest
 {
 
 	static function main()
 	{
 
-		var consumer_key = "testkey" ;
-		var consumer_secret = "testsecret" ;
+		var consumer_key = "consumerkey" ;
+		var consumer_secret = "secret" ;
 
 		var user_key = "username" ;
-		var user_secret = "password" ;
+		var user_secret = "pw" ;
 
 		var server_url = "http://localhost:3000/oauth2/authorize" ;
 
