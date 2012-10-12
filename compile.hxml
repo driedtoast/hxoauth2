@@ -1,0 +1,5 @@
+-main OAuthTest.hx
+-cpp Export
+-cp src
+-cp test
+-v
