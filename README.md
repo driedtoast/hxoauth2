@@ -11,4 +11,6 @@ Originally Sourced from https://code.google.com/p/hxoauth/
 
 -lib hxoauth2
 
+haxe compile.hxml
+
 
