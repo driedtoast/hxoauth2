@@ -6,6 +6,6 @@ mkdir -p dist
 cp haxelib.xml dist
 cp -R src/* dist
 cd dist
-jar cvf "$PACKAGE_NAME.zip" *
+zip -b . "$PACKAGE_NAME" *
 mv "$PACKAGE_NAME.zip" ../
 
