@@ -6,6 +6,7 @@ import haxe.Int32;
 import haxe.io.Bytes;
 import haxe.Timer;
 import utils.Base64;
+import haxe.Json;
 
 /**
  * OAuth2 Client for haxe, currently supporting:
@@ -50,7 +51,8 @@ class Client
 {
 	
 	public var consumer(default, null):Consumer;
-	public var token:Null<String>;
+	public var accessToken:Null<String>;
+	public var refreshToken:Null<String>;
 	public var baseUrl:String;
 	public var signature:SignatureMethod;
 	
@@ -76,6 +78,10 @@ class Client
 
         // TODO parse this
         // {"token_type":"bearer","access_token":"magicTOKEN","expires_in":7200,"refresh_token":"REFRESH MAGIC TOKEN"}
+        if (ret != null) {
+            var results:Dynamic = Json.parse(ret);
+            accessToken = results.access_token;
+        }
 
         trace( " response is "  + ret);
         return this;
@@ -85,9 +91,9 @@ class Client
 	
 	public function request( _uri : String, ?_method : HTTPMethod, ?_postData : Dynamic )
 	{
-		if ( token == null )
+		if ( accessToken == null )
 			throw "Cannot request with unauthenticated user" ;
-		var req = new Request( _uri, consumer, token, _method, _postData ) ;
+		var req = new Request( _uri, consumer, accessToken, _method, _postData ) ;
 		// req.sign( signature ) ;
 		trace( req.dump() ) ;
 		return req.send() ;
@@ -160,16 +166,18 @@ class Request
 
 		data = _data ;
 
+        // TODO clean the below up
 		signature = HMAC_SHA1 ;
 
 		credentials = new Hash<String>() ;
+		/*
 		credentials.set( "cli", _consumer.key ) ;
 		credentials.set( "oauth_token", _token ) ;
 		credentials.set( "oauth_signature_method", signatureToString(signature)  ) ;
 		credentials.set( "oauth_timestamp", "1340982010" ) ;//'' + timestamp() ) ;
 		credentials.set( "oauth_nonce", "ripple" ) ;//generateNonce() ) ;
 		credentials.set( "oauth_version", "1.0" ) ;
-
+        */
 	}
 
 	public function sign( ?_method : SignatureMethod )
@@ -177,7 +185,7 @@ class Request
 
 		signature = ( _method != null ) ? _method : HMAC_SHA1 ;
 
-		credentials.set( "oauth_signature_method", signatureToString(signature) ) ;
+	    credentials.set( "oauth_signature_method", signatureToString(signature) ) ;
 
 		switch( _method )
 		{
@@ -257,20 +265,16 @@ class Request
 
 	}
 
+    /**
+     * Header just needs to have:
+     * "Authorization: Bearer <token>"
+     * In the OAuth2 case
+     */
 	private function composeHeader()
 	{
 		var buf = new StringBuf() ;
-		buf.add( "OAuth " ) ;
-		var params = credentials.keys() ;
-		for ( p in params )
-		{
-			buf.add( encode( p ) ) ;
-			buf.add( "=\"" ) ;
-			buf.add( encode( credentials.get( p ) ) ) ;
-			buf.add( '"' ) ;
-			if ( params.hasNext() )
-				buf.add( ',' ) ;
-		}
+		buf.add( "Bearer " ) ;
+		buf.add(token);
 		return buf.toString() ;
 	}
 
