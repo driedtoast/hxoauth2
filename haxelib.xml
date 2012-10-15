@@ -1,6 +1,6 @@
 <project name="hxoauth2" url="http://github.com/driedtoast/hxoauth2" license="GPL">
     <user name="driedtoast"/>
-    <tag v="oauth"/>
+    <tag v="oauth2"/>
     <description>Oauth2 implementation as a haxelib based on hxoauth</description>
-	<version name="1.0">Initial release, everything is working correctly</version>
+	<version name="0.2">Initial release, everything is in the works</version>
 </project>
