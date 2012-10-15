@@ -40,7 +40,6 @@ import haxe.io.BytesBuffer;
 import haxe.SHA1;
 
 import BytesUtil;
-import I32;
 
 class Sha1 implements IHash {
 
