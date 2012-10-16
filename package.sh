@@ -8,5 +8,7 @@ cp haxelib.xml dist
 cp -R src/* dist
 cd dist
 zip -b . "$PACKAGE_NAME" *
+zip -b . "$PACKAGE_NAME" */*
+zip -b . "$PACKAGE_NAME" */*/*
 mv "$PACKAGE_NAME.zip" ../
 
