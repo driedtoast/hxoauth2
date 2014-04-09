@@ -37,11 +37,11 @@ package chx.hash;
 
 import haxe.io.Bytes;
 import haxe.io.BytesBuffer;
-import haxe.SHA1;
+import haxe.crypto.Sha1;
 
 import BytesUtil;
 
-class Sha1 implements IHash {
+class Sha1_ implements IHash {
 
     public function new() {
 	}
@@ -79,7 +79,7 @@ class Sha1 implements IHash {
 
 
 	public function encode(msg:Bytes) : Bytes {
-	    return Bytes.ofString(SHA1.encode( msg.readString(0,msg.length)));
+	    return Bytes.ofString(Sha1.encode( msg.readString(0,msg.length)));
 	}
 
 }

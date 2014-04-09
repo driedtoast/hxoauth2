@@ -5,7 +5,7 @@
  */
 
 package utils;
-import haxe.BaseCode;
+import haxe.crypto.BaseCode;
 import haxe.io.Bytes;
 
 // IMPORTS
@@ -50,7 +50,9 @@ class Base64
 		else if ( complement == 2 )
 			"="
 		else if ( complement == 1 )
-			"==";		
+			"==";
+		else
+			throw("Complement error");
 	}
 	
 }
