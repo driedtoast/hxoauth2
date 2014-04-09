@@ -2,7 +2,7 @@ package ;
 
 import chx.hash.HMAC;
 import chx.hash.Sha1;
-import haxe.SHA1;
+import haxe.crypto.SHA1;
 // import neko.Lib;
 import hxoauth.OAuth;
 import utils.Base64;

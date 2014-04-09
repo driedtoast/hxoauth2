@@ -1,12 +1,14 @@
 package hxoauth;
 import chx.hash.HMAC;
-import chx.hash.Sha1;
+import chx.hash.Sha1_;
 import haxe.Http;
 import haxe.Int32;
 import haxe.io.Bytes;
 import haxe.Timer;
 import utils.Base64;
 import haxe.Json;
+
+using Lambda ;
 
 /**
  * OAuth2 Client for haxe, currently supporting:
@@ -30,7 +32,6 @@ enum HTTPMethod {
 	
 }
 
-using Lambda ;
 
 /**
  * Main client to initialize the client
@@ -138,7 +139,7 @@ class Request
 
 	private var method : HTTPMethod ;
 
-	private var credentials : Hash<String> ;
+	private var credentials : Map<String, String> ;
 
 	private var signature : SignatureMethod ;
 
@@ -169,7 +170,7 @@ class Request
         // TODO clean the below up
 		signature = HMAC_SHA1 ;
 
-		credentials = new Hash<String>() ;
+		credentials = new Map<String, String>() ;
 		/*
 		credentials.set( "cli", _consumer.key ) ;
 		credentials.set( "oauth_token", _token ) ;
@@ -195,7 +196,7 @@ class Request
 				trace( text ) ;
 				var key = encode( consumer.secret ) + '&' + encode( token ) ;
 				trace( key ) ;
-				var hash = new HMAC( new Sha1() ) ;
+				var hash = new HMAC( new Sha1_() ) ;
 				var bytes = hash.calculate( Bytes.ofString(key), Bytes.ofString(text) );
 				trace( bytes.toHex() ) ;
 				var digest = Base64.encode( bytes.toString() ) ;
@@ -419,7 +420,7 @@ class Request
 
 		#if neko
 		var t = Std.int( Timer.stamp() ) ;
-		return Int32.make( ( t >> 16 ) & 0x7FFF, t & 0xFFFF ) ;
+		return ( t << 16 | t & 0xFFFF );
 		#else
 		return Int32.ofInt( Std.int( Timer.stamp() ) ) ;
 		#end

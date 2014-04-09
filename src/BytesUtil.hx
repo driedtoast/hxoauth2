@@ -109,7 +109,7 @@ class BytesUtil {
 	**/
 	public static function encodeToBase(buf:Bytes,base:String) : Bytes
 	{
-		var bc = new haxe.BaseCode( Bytes.ofString(base) );
+		var bc = new haxe.crypto.BaseCode( Bytes.ofString(base) );
 		return bc.encodeBytes(buf);
 	}
 
